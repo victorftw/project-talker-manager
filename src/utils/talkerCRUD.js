@@ -9,4 +9,14 @@ const getAllTalkers = async () => {
   return talkers.length === 0 ? [] : talkers;
 };
 
-module.exports = { getAllTalkers };
+const getTalkerById = async (id) => {
+  const talkers = await getAllTalkers();
+  const result = talkers.find((talker) => talker.id === Number(id));
+  const errorMessage = {
+    message: 'Pessoa palestrante não encontrada',
+  };
+
+  return result === undefined ? errorMessage : result;
+};
+
+module.exports = { getAllTalkers, getTalkerById };
