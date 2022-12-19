@@ -9,4 +9,4 @@ const validateEmail = (req, res, next) => {
   : next();
 };
 
-exports.validateEmail = validateEmail;
+module.exports = validateEmail;

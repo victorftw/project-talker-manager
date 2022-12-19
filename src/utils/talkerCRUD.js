@@ -1,6 +1,6 @@
 const path = require('path');
 const { readFile } = require('./fs/readData');
-// const { writeFile } = require('./fs/writeData');
+const { writeFile } = require('./fs/writeData');
 
 const talkerPath = path.join(__dirname, '..', 'talker.json');
 
@@ -19,4 +19,18 @@ const getTalkerById = async (id) => {
   return result === undefined ? errorMessage : result;
 };
 
-module.exports = { getAllTalkers, getTalkerById };
+const addNewTalker = async (talker) => {
+  const talkers = await getAllTalkers();
+  talkers.push(talker);
+  const response = await writeFile(talkers, talkerPath);
+  return response;
+};
+
+const deleteTalkerById = async (id) => {
+  const talkers = await getAllTalkers();
+  const newTalkersList = talkers.filter((talker) => talker.id !== Number(id));
+  const response = await writeFile(newTalkersList, talkerPath);
+  return response;
+};
+
+module.exports = { getAllTalkers, getTalkerById, deleteTalkerById, addNewTalker };
