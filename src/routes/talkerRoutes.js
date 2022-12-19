@@ -40,7 +40,7 @@ talkerRouter.get('/talker/:id', async (req, res) => {
 talkerRouter.delete('/talker/:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const response = await deleteTalkerById(id);
-  return response && res.status(200).json();
+  return response && res.status(204).json();
 });
 
 module.exports = talkerRouter;
