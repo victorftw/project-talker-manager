@@ -33,4 +33,12 @@ const deleteTalkerById = async (id) => {
   return response;
 };
 
-module.exports = { getAllTalkers, getTalkerById, deleteTalkerById, addNewTalker };
+const editTalkerById = async (id, editTalker) => {
+  const talkersList = await getAllTalkers();
+  const index = talkersList.findIndex((talker) => talker.id === Number(id));
+  talkersList[index] = { ...editTalker };
+  const response = await writeFile(talkersList, talkerPath);
+  return response;
+};
+
+module.exports = { getAllTalkers, getTalkerById, deleteTalkerById, addNewTalker, editTalkerById };

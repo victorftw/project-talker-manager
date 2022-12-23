@@ -4,7 +4,7 @@ const validateName = require('../middlewares/isValidName');
 const { validateTalk, validateDate, validateRate } = require('../middlewares/isValidTalk');
 const validateToken = require('../middlewares/isValidToken');
 const { getAllTalkers, getTalkerById, deleteTalkerById,
-  addNewTalker } = require('../utils/talkerCRUD');
+  addNewTalker, editTalkerById } = require('../utils/talkerCRUD');
 
 const talkerRouter = Router();
 
@@ -28,6 +28,23 @@ talkerRouter.post('/talker', validateToken,
     };
   await addNewTalker(newTalker);
   return res.status(201).json(newTalker);
+});
+
+talkerRouter.put('/talker/:id', validateToken, validateName, validateAge,
+  validateTalk, validateRate, validateDate, async (req, res) => {
+  const { id } = req.params;
+  const { name, age, talk: { watchedAt, rate } } = req.body;
+  const talker = {
+    id: Number(id),
+    name,
+    age: Number(age),
+    talk: {
+      watchedAt,
+      rate: Number(rate),
+    },
+  };
+  await editTalkerById(id, talker);
+  return res.status(200).json(talker);
 });
 
 talkerRouter.get('/talker/:id', async (req, res) => {

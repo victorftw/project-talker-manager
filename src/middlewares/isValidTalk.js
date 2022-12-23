@@ -11,7 +11,7 @@ const validateDate = (req, res, next) => {
 
 const validateRate = (req, res, next) => {
   const { talk: { rate } } = req.body;
-  if (!rate) {
+  if (rate === undefined) {
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
   }
   return rate < 1 || rate > 5 || !Number.isInteger(rate) ? res.status(400)
