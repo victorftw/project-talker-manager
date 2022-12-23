@@ -41,4 +41,15 @@ const editTalkerById = async (id, editTalker) => {
   return response;
 };
 
-module.exports = { getAllTalkers, getTalkerById, deleteTalkerById, addNewTalker, editTalkerById };
+const searchTalkers = async (q) => {
+  const talkers = await getAllTalkers();
+  const result = talkers.filter((talker) => talker.name.includes(q)) || [];
+  return result;
+};
+
+module.exports = { getAllTalkers,
+  getTalkerById,
+  deleteTalkerById,
+  addNewTalker,
+  editTalkerById,
+  searchTalkers };

@@ -4,9 +4,15 @@ const validateName = require('../middlewares/isValidName');
 const { validateTalk, validateDate, validateRate } = require('../middlewares/isValidTalk');
 const validateToken = require('../middlewares/isValidToken');
 const { getAllTalkers, getTalkerById, deleteTalkerById,
-  addNewTalker, editTalkerById } = require('../utils/talkerCRUD');
+  addNewTalker, editTalkerById, searchTalkers } = require('../utils/talkerCRUD');
 
 const talkerRouter = Router();
+
+talkerRouter.get('/talker/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+  const talkers = await searchTalkers(q);
+  return res.status(200).json(talkers);
+});
 
 talkerRouter.get('/talker', async (_req, res) => {
   const talkers = await getAllTalkers();
